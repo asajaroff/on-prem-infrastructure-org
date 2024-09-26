@@ -1,0 +1,14 @@
+---
+- name: Install development packages
+  apt:
+    pkg:
+    - git
+    - neovim
+    - emacs
+    - jq
+    - ripgrep
+    - podman
+    - podman-docker
+    - docker-compose
+    - clang
+    - cmake

@@ -1,0 +1,26 @@
+- name: Install Cockpit related packages
+  ansible.builtin.apt:
+    pkg:
+    - cockpit
+    - cockpit-machines
+    - cockpit-podman
+    - cockpit-networkmanager
+    - virtinst # For managing virtual machines?
+    - lm-sensors
+    install_recommends: false # Don't install graphical packages
+
+- name: Download 'Cockpit Sensors' .deb package from Github
+  ansible.builtin.get_url:
+    url: https://github.com/ocristopfer/cockpit-sensors/releases/latest/download/cockpit-sensors.deb
+    dest: /tmp
+    mode: '0440'
+
+- name: Install 'Cockpit Sensors' .deb package
+  ansible.builtin.apt:
+    deb: /tmp/cockpit-sensors.deb
+
+- name: Make Cockpit available by default after system restart
+  ansible.builtin.systemd_service:
+    name: cockpit.socket
+    state: started
+    enabled: true

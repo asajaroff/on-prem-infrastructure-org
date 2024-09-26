@@ -1,0 +1,14 @@
+---
+# Disable lid suspend / hibernate
+# https://www.dell.com/support/kbdoc/en-us/000179566/how-to-disable-sleep-and-configure-lid-power-settings-for-ubuntu-or-red-hat-enterprise-linux-7
+- name: Configure logind.conf
+  become: yes
+  template:
+    src: logind.conf.j2
+    dest: /etc/systemd/logind.conf
+    owner: root
+    group: root
+    mode: 0644
+  vars:
+    item: "{{ logind }}"
+  notify: restart systemd-logind

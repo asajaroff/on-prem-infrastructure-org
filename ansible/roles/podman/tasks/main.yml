@@ -1,0 +1,7 @@
+- name: Install Podman
+  ansible.builtin.apt:
+    pkg:
+    - podman
+    - uidmap
+    - slirp4netns
+    install_recommends: true # Don't install graphical packages

@@ -1,0 +1,55 @@
+---
+# Ensure the system is updated
+- name: Update APT package index
+  apt:
+    update_cache: yes
+
+- name: Upgrade all packages to the latest version
+  apt:
+    upgrade: dist
+    autoremove: yes
+    autoclean: yes
+  reboot: yes
+
+# Install Xen hypervisor and necessary tools
+- name: Install Xen hypervisor and tools
+  apt:
+    name:
+      - xen-hypervisor-amd64
+      - xen-tools
+      - xen-utils-common
+      - bridge-utils
+    state: present
+
+# Configure GRUB to boot into Xen
+- name: Ensure Xen hypervisor boots by default in GRUB
+  template:
+    src: grub.j2
+    dest: /etc/default/grub
+  notify: Update grub
+
+# Set up the network bridge
+- name: Configure the network bridge for Xen guests
+  copy:
+    content: |
+      auto xenbr0
+      iface xenbr0 inet dhcp
+        bridge_ports {{ network_interface }}
+    dest: /etc/network/interfaces.d/xenbr0.cfg
+    owner: root
+    group: root
+    mode: '0644'
+
+# Restart networking to apply bridge configuration
+- name: Restart networking
+  service:
+    name: networking
+    state: restarted
+
+# Reboot the server after installation and configuration
+- name: Reboot the system after Xen installation
+  reboot:
+    msg: "Rebooting to apply Xen Hypervisor installation"
+    connect_timeout: 5
+    reboot_timeout: 600
+

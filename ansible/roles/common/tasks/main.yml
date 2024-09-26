@@ -1,0 +1,8 @@
+---
+- name: Include 'sudo'
+  ansible.builtin.import_tasks:
+    file: roles/common/tasks/sudo.yml
+
+- name: Include 'sshd'
+  ansible.builtin.import_tasks:
+    file: roles/common/tasks/sshd.yml

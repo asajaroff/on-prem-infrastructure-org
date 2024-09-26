@@ -1,0 +1,17 @@
+# playbook.yml
+---
+- name: Devbox debian 12 wormbook
+  hosts: all
+  become: yes
+  become_method: sudo
+  gather_facts: yes
+  
+  # Optional: Pre-tasks run before the main role or tasks
+  pre_tasks:
+    - name: Ensure the system is updated before proceeding
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+  roles:
+    - role: devbox

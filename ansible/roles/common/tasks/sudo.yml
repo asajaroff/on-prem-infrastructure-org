@@ -1,0 +1,27 @@
+---
+# ansible-galaxy collection list
+# https://docs.ansible.com/ansible/latest/collections/community/general/sudoers_module.html
+
+- name: Install sudo
+  apt:
+    name: sudo
+    state: present
+
+- name: >-
+    Add the user 'galera' with a bash shell, appending the group 
+    'admins' and 'developers' to the user's groups
+  ansible.builtin.user:
+    name: '{{ host_user }}'
+    shell: /bin/bash
+    groups: sudo
+    append: yes
+
+- name: >-
+    Allows users in the sudo group to run sudo commands without 
+    requiring a password
+  community.general.sudoers:
+    name: sudoers-nopasswd
+    group: sudo
+    commands:
+      - ALL
+    nopassword: true
