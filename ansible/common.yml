@@ -2,11 +2,10 @@
 ---
 - name: Common
   hosts: all
-  become: yes # Use privilege escalation (e.g., sudo) if needed for task execution
-  become_method: su
-  gather_facts: yes # Collect system facts; set to no if not needed to save time
+  become: yes
+  become_method: su # Needs to be sudo as some systems don't have sudo installed
+  gather_facts: yes
   
-  # Optional: Pre-tasks run before the main role or tasks
   pre_tasks:
     - name: Ensure the system is updated before proceeding
       apt:
