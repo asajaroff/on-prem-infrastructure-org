@@ -15,4 +15,5 @@
 
   roles:
     - role: common
+    - role: network
     - role: haproxy

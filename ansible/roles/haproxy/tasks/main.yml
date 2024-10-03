@@ -1,0 +1,30 @@
+---
+- name: Copy new config
+  become: yes
+  ansible.builtin.template:
+    src: roles/haproxy/templates/haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg_new
+    owner: root
+    group: root
+    mode: '0600'
+
+- name: Validate config
+  become: yes
+  ansible.builtin.shell:
+    cmd: haproxy -f /etc/haproxy/haproxy.cfg_new
+
+- name: Validate config
+  become: yes
+  ansible.builtin.shell:
+    cmd: mv /etc/haproxy/haproxy.cfg_new /etc/haproxy/haproxy.cfg
+    
+- name: Reload service
+  ansible.builtin.systemd_service:
+    name: haproxy.service
+    state: reloaded
+
+- name: Restart service
+  ansible.builtin.systemd_service:
+    state: restarted
+    daemon_reload: true
+    name: haproxy.service

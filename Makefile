@@ -14,7 +14,7 @@ common: # Install common on a particular set of hosts (--limit)
 		--ask-become-pass"
 
 haproxy: ## HAProxy installation step
-	ansible-playbook ansible/common.yml \
+	ansible-playbook ansible/haproxy.yml \
 		-i ansible/inventory/amsterdam.yml
 
 docker: # Set up the `podman-machine`
