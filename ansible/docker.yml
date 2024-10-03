@@ -1,0 +1,19 @@
+---
+- name: Docker playbook
+  hosts: podman-machine.ams.molest.ar
+  become: yes # Use privilege escalation (e.g., sudo) if needed for task execution
+  become_method: sudo
+  gather_facts: no
+  
+  # Optional: Pre-tasks run before the main role or tasks
+  pre_tasks:
+    - name: Ensure the system is updated before proceeding
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+  roles:
+    - role: podman
+    - role: network
+      vars:
+        hostname: "docker.ams.molest.ar"

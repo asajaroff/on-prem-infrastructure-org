@@ -1,0 +1,49 @@
+HTTP/1.0 400 Bad request
+Cache-Control: no-cache
+Connection: close
+Content-Type: text/html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>400 Bad request>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            background-color: #1a1a1a;
+            color: #f1c40f;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            margin-top: 30vh;
+        }
+
+        div {
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>400 Bad request</h1>
+    </div>
+    <div>
+        <h3>Your browser sent an invalid request.</h3>
+    </div>
+</body>
+</html>

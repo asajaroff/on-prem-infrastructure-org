@@ -4,4 +4,6 @@
     - podman
     - uidmap
     - slirp4netns
+    - podman-docker
+    - podman-compose
     install_recommends: true # Don't install graphical packages

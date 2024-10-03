@@ -7,11 +7,16 @@ proxmox:
     
 vms:
   hosts:
-    devbox.molest.ar:
+    debian.ams.molest.ar:
       ansible_port: 22
       ansible_host: 192.168.1.205
       ansible_user: galera
-    template:
+    proxy.ams.molest.ar:
       ansible_port: 22
-      ansible_host: 192.168.1.190
+      ansible_host: 192.168.1.100
       ansible_user: galera
+    podman-machine.ams.molest.ar:
+      ansible_port: 22
+      ansible_host: 192.168.1.190 
+      ansible_user: galera
+      hostname: podman-machine.ams.molest.ar

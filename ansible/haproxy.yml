@@ -1,7 +1,7 @@
-# playbook.yml
+# HAProxy
 ---
-- name: Devbox debian 12 wormbook
-  hosts: debian.ams.molest.ar
+- name: HAProxy
+  hosts: proxy.ams.molest.ar
   become: yes
   become_method: sudo
   gather_facts: yes
@@ -14,4 +14,5 @@
         cache_valid_time: 3600
 
   roles:
-    - role: devbox
+    - role: common
+    - role: haproxy

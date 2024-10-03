@@ -1,0 +1,16 @@
+---
+- name: Set up hostname
+  ansible.builtin.hostname:
+    name: '{{ inventory_hostname }}'
+    use: systemd
+
+- name: Set up other hosts in the network for quick access
+  become: yes
+  ansible.builtin.template:
+    src: roles/network/templates/hosts.j2
+    dest: /etc/hosts
+    owner: root
+    group: root
+    mode: '0600'
+  vars:
+    hostname: '{{ inventory_hostname }}'

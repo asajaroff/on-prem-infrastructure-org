@@ -1,11 +1,10 @@
 ---
 - name: Proxmox playbook
   hosts: all
-  become: yes # Use privilege escalation (e.g., sudo) if needed for task execution
+  become: yes
   become_method: su
-  gather_facts: yes # Collect system facts; set to no if not needed to save time
+  gather_facts: yes
   
-  # Optional: Pre-tasks run before the main role or tasks
   pre_tasks:
     - name: Ensure the system is updated before proceeding
       apt:
@@ -16,3 +15,6 @@
     - role: common
       vars:
         host_user: root
+    - role: hostname
+      vars:
+        hostname: "proxmox.ams.molest.ar"
