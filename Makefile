@@ -7,14 +7,15 @@ help:
 ping: ## Ping all hosts in the inventory
 	@ansible -m ping vms -i ansible/inventory/amsterdam.yml
 
-common: # Install common on a particular set of hosts (--limit)
-	@echo "ansible-playbook ansible/common.yml \
+bootstrap: # Install common on a particular set of hosts (--limit) - Run as `make bootstrap TARGET_HOST=host.example.com`
+	ansible-playbook ansible/common.yml \
 		-i ansible/inventory/amsterdam.yml \
-		--limit vms \
-		--ask-become-pass"
+		--limit ${TARGET_HOST} \
+		--ask-become-pass
 
 haproxy: ## HAProxy installation step
 	ansible-playbook ansible/haproxy.yml \
+		--ask-become-pass \
 		-i ansible/inventory/amsterdam.yml
 
 docker: # Set up the `podman-machine`

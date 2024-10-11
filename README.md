@@ -13,3 +13,7 @@ Europe, is running a laptop as a server with a bunch of virtualised environments
 ![Amstedam network diagram](./docs/diagram-ams.svg)
 
 ### Buenos Aires
+
+## Host configurations
+
+[debian][docs/cloud-init-debian12.md]

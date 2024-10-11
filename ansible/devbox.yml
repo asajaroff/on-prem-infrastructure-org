@@ -1,7 +1,7 @@
-# playbook.yml
+# devbox.yml
 ---
 - name: Devbox debian 12 wormbook
-  hosts: debian.ams.molest.ar
+  hosts: cloud-init-debian12
   become: yes
   become_method: sudo
   gather_facts: yes

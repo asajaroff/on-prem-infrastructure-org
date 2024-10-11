@@ -11,17 +11,25 @@ vms:
       ansible_port: 22
       ansible_host: 192.168.1.205
       ansible_user: galera
+
     proxy.ams.molest.ar:
       ansible_port: 22
       ansible_host: 192.168.1.100
       ansible_user: galera
+
     podman-machine.ams.molest.ar:
       ansible_port: 22
       ansible_host: 192.168.1.190 
       ansible_user: galera
       hostname: podman-machine.ams.molest.ar
+
     cloud-init-debian12:
       ansible_port: 22
       ansible_host: 192.168.1.192 
       ansible_user: galera
       hostname: cloud-init.ams.molest.ar
+
+    devbox.ams.molest.ar:
+      ansible_port: 22
+      ansible_host: 192.168.1.14
+      ansible_user: galera

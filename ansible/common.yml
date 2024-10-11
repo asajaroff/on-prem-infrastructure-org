@@ -3,7 +3,7 @@
 - name: Common
   hosts: all
   become: yes
-  become_method: su # Needs to be sudo as some systems don't have sudo installed
+  become_method: su # Needs to be su as some systems don't have sudo installed
   gather_facts: yes
   
   pre_tasks:
