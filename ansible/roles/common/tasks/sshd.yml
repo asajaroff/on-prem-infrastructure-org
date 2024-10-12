@@ -1,8 +1,27 @@
-  - name: Replace sshd config with safer defaults
-    become: yes
-    ansible.builtin.template:
-      src: roles/common/templates/sshd_config.j2
-      dest: /etc/ssh/sshd_config
-      owner: root
-      group: root
-      mode: '0600'
+- name: Set authorized keys taken from url
+  ansible.posix.authorized_key:
+    user: galera
+    state: present
+    key: https://github.com/asajaroff.keys
+
+- name: Replace sshd config with safer defaults
+  become: yes
+  ansible.builtin.template:
+    src: roles/common/templates/sshd_config.j2
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: '0600'
+
+- name: Add banner for sshd
+  ansible.builtin.template:
+    src: roles/common/templates/sshd_banner.j2
+    dest: /etc/issue.net
+    owner: root
+    group: root
+    mode: '0611'
+
+- name: Restart sshd server
+  ansible.builtin.service:
+    name: sshd
+    state: restarted

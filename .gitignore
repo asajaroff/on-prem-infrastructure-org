@@ -153,3 +153,6 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+# SSL Certs
+ansible/roles/haproxy/templates/cert.pem
