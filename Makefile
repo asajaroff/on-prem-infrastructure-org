@@ -13,10 +13,17 @@ bootstrap: # Install common on a particular set of hosts (--limit) - Run as `mak
 		--limit ${TARGET_HOST} \
 		--ask-become-pass
 
-haproxy: ## HAProxy installation step
+haproxy: haproxy-validate ## HAProxy installation step
 	ansible-playbook ansible/haproxy.yml \
-		--ask-become-pass \
 		-i ansible/inventory/amsterdam.yml
+
+haproxy-validate:
+	podman run \
+		-v ./ansible/roles/haproxy/templates/haproxy.cfg.j2:/etc/haproxy/haproxy.cfg \
+		-v ./ansible/roles/haproxy/templates/errors/:/etc/haproxy/errors/ \
+		-v ./ansible/roles/haproxy/templates/cert.pem:/etc/haproxy/certs/ams.molest.ar.pem \
+		docker.io/haproxy:2.6-bookworm  \
+		-c -V -f /etc/haproxy/haproxy.cfg
 
 docker: # Set up the `podman-machine`
 	ansible-playbook ansible/docker.yml \

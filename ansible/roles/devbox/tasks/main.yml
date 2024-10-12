@@ -4,17 +4,16 @@
     pkg:
     - git
     - neovim
-    - emacs
     - jq
     - ripgrep
     - podman
     - podman-docker
-    - docker-compose
     - clang
     - cmake
     - build-essential
     - net-tools
     - autoconf
+    - golang-go
 
 - name: Install nvm
   ansible.builtin.shell: >
