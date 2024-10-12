@@ -17,6 +17,9 @@ global
         ssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256
         ssl-default-bind-options ssl-min-ver TLSv1.2 no-tls-tickets
 
+        # SSL tests
+        ssl-server-verify none
+        
 defaults
         log     global
         mode    http
@@ -33,15 +36,26 @@ defaults
         errorfile 503 /etc/haproxy/errors/503.http
         errorfile 504 /etc/haproxy/errors/504.http
 
-frontend default
-  bind :80
+frontend www
   mode http
-  bind :443
+  bind :80
+  bind :443 ssl /etc/haproxy/certs/ams.molest.ar.pem
+  # Redirect to HTTPS
+  http-request redirect scheme https unless { ssl_fc } 
+  # Force HSTS
+  http-response set-header Strict-Transport-Security "max-age=16000000; includeSubDomains; preload;"
   default_backend podman-machine
 
 frontend default_tls
   mode http
   bind :443
+
+  acl ACL_chat.molest.ar hdr(host) -i chat.molest.ar
+  use_backend podman-machine if ACL_chat.molest.ar
+
+  acl proxmox hdr(host) -i vms.ams.molest.ar
+  use_backend proxmox-www if proxmox
+
   default_backend podman-machine
 
 acl ACL_chat.molest.ar hdr(host) -i chat.molest.ar
@@ -50,3 +64,6 @@ acl ACL_chat.molest.ar hdr(host) -i chat.molest.ar
 backend podman-machine
    mode http
    server podman-machine-0 192.168.1.232:8080
+
+backend proxmox-www
+  server proxmox-0 192.168.1.20:8006 ssl verify none
